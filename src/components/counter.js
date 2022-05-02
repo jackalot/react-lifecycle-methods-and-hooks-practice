@@ -17,6 +17,18 @@ export default class Counter extends React.Component {
         console.log('Component Did Mount');
         console.log('-------------------');
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        
+        if(nextProps.ignoreProp && this.props.ignoreProp !== nextProps.ignoreProp)
+        {
+            console.log('Should Component Update - DO NOT RENDER');
+            console.log('-----------------------');
+            return false;
+        }
+        console.log('Should Component Update - RENDER');
+        console.log('-----------------------');
+        return true;
+    }
     render () {
         console.log('Render')
 
@@ -32,5 +44,9 @@ export default class Counter extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('Component Did update');
         console.log('--------------------');
+    }
+    componentWillUnmount() {
+        console.log("Component Will Unmount");
+        console.log("-----------------------");
     }
 }
