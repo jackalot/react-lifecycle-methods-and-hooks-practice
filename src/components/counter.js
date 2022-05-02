@@ -1,5 +1,5 @@
 import React from "react";
-
+const ErrorComponent = () => <div>{props.ignore}</div>
 export default class Counter extends React.Component {
     constructor(props) {
         console.log('Constructor');
@@ -37,9 +37,15 @@ export default class Counter extends React.Component {
         console.log('-----------------------');
         return true;
     }
+    getSnapshotBeforeUpdate(prevProps, prevState)
+    {
+        return null;
+    }
     render () {
-        console.log('Render')
-
+        console.log('Render', this.state.error)
+        if(this.state.error) {
+            return <div> We have encountered an error! {this.state.error.message}</div>
+        }
         return <div>
             <button onClick={this.increment}>increment</button>
             <button onClick={this.decrement}>decrement</button>
@@ -56,5 +62,10 @@ export default class Counter extends React.Component {
     componentWillUnmount() {
         console.log("Component Will Unmount");
         console.log("-----------------------");
+    }
+    componentDidCatch(error, info) {
+        console.log('Component Did Catch');
+
+        this.setState({error, info})
     }
 }
